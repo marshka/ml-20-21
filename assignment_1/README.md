@@ -15,18 +15,18 @@ In order to complete the assignment, you have to address the tasks listed below 
 
 ### T1.
 Use the family of models `f(x, theta) = theta_0 + theta_1 * x_1 + theta_2 * x_2 + theta_3 * x_1 * x_2 + theta_4 * sin(x_1) ` to fit the data:
-    - write in the report the formula of the model substituting parameters `theta_0, ..., theta_4` with the estimates you've found;
-    - evaluate the test performance of your model using the mean squared error as performance measure.
+* write in the report the formula of the model substituting parameters `theta_0, ..., theta_4` with the estimates you've found;
+* evaluate the test performance of your model using the mean squared error as performance measure.
 
 ### T2.
 Consider any family of non-linear models of your choice to address the above regression problem:
-    - evaluate the test performance of your model using the mean squared error as performance measure;
-    - compare your model with the linear regression of task 1. Which one is **statistically** better?
+* evaluate the test performance of your model using the mean squared error as performance measure;
+* compare your model with the linear regression of task 1. Which one is **statistically** better?
 
 ### T3. (Bonus)
 
 In the [Github repository of the course](https://github.com/marshka/ml-20-21), you will find a trained Scikit-learn model that we built using the same dataset you are given. This _baseline_ model is able to achieve a MSE of **0.0194**, when evaluated on the test set.
-You will get extra points if the test performance of your model is **better** (i.e., the MSE is lower) than ours. Of course, you also have to tell us **why** you think that your model is better.
+You will get extra points if you provide a model of your choice whose test performance is **better** (i.e., the MSE is lower) than ours. Of course, you also have to tell us **why** you think that your model is better.
 
 
 In order to complete the assignment, you must submit a zip file on the iCorsi platform containing:
