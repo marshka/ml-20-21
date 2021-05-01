@@ -7,7 +7,7 @@ Bear in mind that the questions you are asked are similar to those you may find 
 We will give you some feedback afterwards. 
 
 ## Tasks
-You have to solve a regression problem. You are given a set of data consisting of input-output pairs `(x, y)`, and you have to build a model to fit this data.  We will then evaluate the performance of your model on a **different test set**.
+You have to solve a regression problem. You are given a set of data consisting of input-output pairs `(x, y)`, where `x` is a bidimensional vector, and you have to build a model to fit this data.  We will then evaluate the performance of your model on a **different test set**.
 
 
 In order to complete the assignment, you have to address the tasks listed below and submit your solution as a zip file on the iCorsi platform. More details are in the Instructions section below.
