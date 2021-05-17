@@ -2,7 +2,7 @@ from tensorflow.keras.models import load_model
 
 if __name__ == '__main__':
 
-    # Load the test CIFAR-10 data
+    # Load the data
 
     # ...
 
@@ -14,21 +14,15 @@ if __name__ == '__main__':
 
     # Load the trained models
     #for example
-    model_task1 = load_model('./nn_task1.h5')
     model_task2 = load_model('./nn_task2.h5')
 
 
     # Predict on the given samples
     #for example
-    y_pred_task1 = model_task1.predict(x_test)
     y_pred_task2 = model_task2.predict(x_test)
 
-
     # Evaluate the missclassification error on the test set
-    #for example
-    assert y_test.shape == y_pred_task1.shape
+    # for example
     assert y_test.shape == y_pred_task2.shape
-    acc1 = (y_test == y_pred_task1).mean()
-    acc2 = (y_test == y_pred_task2).mean()
-    print("Accuracy model task 1:", acc1)
-    print("Accuracy model task 2:", acc2)
+    acc = ...  # evaluate accuracy with proper function
+    print("Accuracy model task 2:", acc)
