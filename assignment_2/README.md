@@ -103,7 +103,7 @@ In order to complete the assignment, you must submit a zip file named `as2_surna
 
 1. A report in `.pdf` format containing the plots and comments of the two tasks. You can use the `.tex` source code provided in the repo (not mandatory).
 2. The two best models you find for both the tasks (one per task). By default, the keras function to save the model outputs a folder with several files inside. If you prefer a more compact solution, just append `.h5` at the end of the name you use to save the model to end up with a single file.
-3. A working example `run_task1.py` that loads the test set in CIFAR-10 dataset, preprocesses the data, loads the trained model from file and evaluate the accuracy.
+3. A working example `run_task1.py` that loads the test set in CIFAR-10 dataset, preprocesses the data, loads the trained model from file and evaluate the accuracy. In case you completed the bonus point, turn in the model with the highest accuracy.
 3. A working example `run_task2.py` that loads the test set of the rock, paper, scissors dataset, preprocesses the data, loads the trained model from file and evaluate the accuracy.
 4. A folder `src` with all the source code you used to build, train, and evaluate your models.
 
