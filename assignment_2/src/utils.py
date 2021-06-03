@@ -1,4 +1,5 @@
 import os
+import pickle
 import urllib.request as http
 from zipfile import ZipFile
 
@@ -143,3 +144,32 @@ def load_keras_model(filename):
     """
     model = load_model(filename)
     return model
+
+
+def save_vgg16(model, filename='nn_task2.pkl', additional_args=()):
+    """
+    Optimize task2 model by only saving the layers after vgg16. This function
+    assumes that you only added Flatten and Dense layers. If it is not the case,
+    you should include into `additional_args` other layers' attributes you
+    need.
+
+    :param filename: string, path to the file in which to store the model.
+    :param additional_args: tuple or list, additional layers' attributes to be 
+    saved. Default are ['units', 'activation', 'use_bias']
+    :return: the path of the saved model.
+    """
+    filename = filename if filename.endswith('.pkl') else (filename + '.pkl')
+    args = ['units', 'activation', 'use_bias', *additional_args]
+    layers = []
+    for l in model.layers[1:]:
+        layer = dict()
+        layer['class'] = l.__class__.__name__
+        if l.weights:
+            layer['weights'] = l.get_weights()
+            layer['kwargs'] = {k: v for k, v in vars(l).items() if k in args}
+        layers.append(layer)
+
+    with open(filename, 'wb') as fp:
+        pickle.dump(layers, fp)
+    
+    return os.path.abspath(filename)
