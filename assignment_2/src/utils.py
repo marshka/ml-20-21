@@ -6,6 +6,9 @@ from zipfile import ZipFile
 import tensorflow as tf
 import numpy as np
 from PIL import Image
+
+from tensorflow.keras import layers as keras_layers
+from tensorflow.keras import backend as K
 from tensorflow.keras.datasets import cifar10
 from tensorflow.keras.models import save_model, load_model
 
@@ -173,3 +176,35 @@ def save_vgg16(model, filename='nn_task2.pkl', additional_args=()):
         pickle.dump(layers, fp)
     
     return os.path.abspath(filename)
+
+
+def load_vgg16(filename='nn_task2.pkl', img_h=224, img_w=224):
+    """
+    Loads the model saved with save_vgg16.
+
+    :param filename: string, path to the file storing the model.
+    :param img_h: int, the height of the input image.
+    :param img_w: int, the width of the input image.
+    :return: the model.
+    """
+    K.clear_session()
+
+    vgg16 = applications.VGG16(weights='imagenet',  
+                              include_top=False, 
+                              input_shape=(img_h, img_w, 3))
+    model = Sequential()
+    model.add(vgg16)
+
+    with open(filename, 'rb') as fp:
+        layers = pickle.load(fp)
+    for l in layers:
+        cls = getattr(keras_layers, l['class'])
+        if 'weights' in l:
+            layer = cls(**l['kwargs'])
+            model.add(layer)
+            model.layers[-1].set_weights(l['weights'])
+        else:
+            model.add(cls())
+    
+    model.trainable = False
+    return model
