@@ -146,7 +146,6 @@ def load_keras_model(filename):
     model = load_model(filename)
     return model
 
-
 def save_vgg16(model, filename='nn_task2.pkl', additional_args=()):
     """
     Optimize task2 model by only saving the layers after vgg16. This function
@@ -155,24 +154,24 @@ def save_vgg16(model, filename='nn_task2.pkl', additional_args=()):
     need.
 
     :param filename: string, path to the file in which to store the model.
-    :param additional_args: tuple or list, additional layers' attributes to be
+    :param additional_args: tuple or list, additional layers' attributes to be 
     saved. Default are ['units', 'activation', 'use_bias']
     :return: the path of the saved model.
     """
     filename = filename if filename.endswith('.pkl') else (filename + '.pkl')
-    args = ['units', 'activation', 'use_bias', *additional_args]
+    args = ['units', 'activation', 'use_bias', 'name', *additional_args]
     layers = []
     for l in model.layers[1:]:
         layer = dict()
         layer['class'] = l.__class__.__name__
+        layer['kwargs'] = {k: getattr(l, k) for k in dir(l) if k in args}
         if l.weights:
             layer['weights'] = l.get_weights()
-            layer['kwargs'] = {k: v for k, v in vars(l).items() if k in args}
         layers.append(layer)
 
     with open(filename, 'wb') as fp:
         pickle.dump(layers, fp)
-
+    
     return os.path.abspath(filename)
 
 
@@ -187,9 +186,9 @@ def load_vgg16(filename='nn_task2.pkl', img_h=224, img_w=224):
     """
     K.clear_session()
 
-    vgg16 = applications.VGG16(weights='imagenet',
-                               include_top=False,
-                               input_shape=(img_h, img_w, 3))
+    vgg16 = applications.VGG16(weights='imagenet',  
+                              include_top=False, 
+                              input_shape=(img_h, img_w, 3))
     model = Sequential()
     model.add(vgg16)
 
@@ -197,13 +196,11 @@ def load_vgg16(filename='nn_task2.pkl', img_h=224, img_w=224):
         layers = pickle.load(fp)
     for l in layers:
         cls = getattr(keras_layers, l['class'])
+        layer = cls(**l['kwargs'])
+        model.add(layer)
         if 'weights' in l:
-            layer = cls(**l['kwargs'])
-            model.add(layer)
             model.layers[-1].set_weights(l['weights'])
-        else:
-            model.add(cls())
-
+    
     model.trainable = False
     return model
 
@@ -227,15 +224,18 @@ if __name__ == '__main__':
     net.add(vgg16)
     net.add(keras_layers.Flatten())
     net.add(keras_layers.Dense(1))  # <- JUST AN EXAMPLE TO MAKE A WORKING NETWORK, DON'T COPY
+    net.summary()
 
     # Save model
     path = save_vgg16(net)
 
     # Load model
+    print("\nReload model\n")
     loaded_net = load_vgg16(path)
+    loaded_net.summary()
 
     assert len(net.weights) == len(loaded_net.weights)
     weights_are_equal = [tf.equal(w1, w2).numpy().all()
                          for w1, w2 in zip(net.weights, loaded_net.weights)]
     if all(weights_are_equal):
-        print("The loaded model has the same weights of the original one.")
+        print("\nThe loaded model has the same weights of the original one.")
