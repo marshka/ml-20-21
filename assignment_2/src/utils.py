@@ -1,12 +1,14 @@
 import os
+import pickle
 import urllib.request as http
 from zipfile import ZipFile
 
-import tensorflow as tf
 import numpy as np
+import tensorflow as tf
 from PIL import Image
+from tensorflow.keras import applications, layers as keras_layers, backend as K
 from tensorflow.keras.datasets import cifar10
-from tensorflow.keras.models import save_model, load_model
+from tensorflow.keras.models import Sequential, save_model, load_model
 
 
 def load_cifar10(num_classes=3):
@@ -81,11 +83,11 @@ def make_dataset(imgs, labels, label_map, img_size, rgb=True, keepdim=True, shuf
         x_i = np.asarray(x_i)
         if not keepdim:
             x_i = x_i.reshape(-1)
-        
+
         # encode label
         y_i = np.zeros(n_classes)
         y_i[label_map[l]] = 1.
-        
+
         x.append(x_i)
         y.append(y_i)
     x, y = np.array(x).astype('float32'), np.array(y)
@@ -143,3 +145,97 @@ def load_keras_model(filename):
     """
     model = load_model(filename)
     return model
+
+def save_vgg16(model, filename='nn_task2.pkl', additional_args=()):
+    """
+    Optimize task2 model by only saving the layers after vgg16. This function
+    assumes that you only added Flatten and Dense layers. If it is not the case,
+    you should include into `additional_args` other layers' attributes you
+    need.
+
+    :param filename: string, path to the file in which to store the model.
+    :param additional_args: tuple or list, additional layers' attributes to be 
+    saved. Default are ['units', 'activation', 'use_bias']
+    :return: the path of the saved model.
+    """
+    filename = filename if filename.endswith('.pkl') else (filename + '.pkl')
+    args = ['units', 'activation', 'use_bias', 'name', *additional_args]
+    layers = []
+    for l in model.layers[1:]:
+        layer = dict()
+        layer['class'] = l.__class__.__name__
+        layer['kwargs'] = {k: getattr(l, k) for k in dir(l) if k in args}
+        if l.weights:
+            layer['weights'] = l.get_weights()
+        layers.append(layer)
+
+    with open(filename, 'wb') as fp:
+        pickle.dump(layers, fp)
+    
+    return os.path.abspath(filename)
+
+
+def load_vgg16(filename='nn_task2.pkl', img_h=224, img_w=224):
+    """
+    Loads the model saved with save_vgg16.
+
+    :param filename: string, path to the file storing the model.
+    :param img_h: int, the height of the input image.
+    :param img_w: int, the width of the input image.
+    :return: the model.
+    """
+    K.clear_session()
+
+    vgg16 = applications.VGG16(weights='imagenet',  
+                              include_top=False, 
+                              input_shape=(img_h, img_w, 3))
+    model = Sequential()
+    model.add(vgg16)
+
+    with open(filename, 'rb') as fp:
+        layers = pickle.load(fp)
+    for l in layers:
+        cls = getattr(keras_layers, l['class'])
+        layer = cls(**l['kwargs'])
+        model.add(layer)
+        if 'weights' in l:
+            model.layers[-1].set_weights(l['weights'])
+    
+    model.trainable = False
+    return model
+
+
+if __name__ == '__main__':
+
+    # since VGG16 was trained on high-resolution images using a low resolution might not be a good idea
+    img_h, img_w = 224, 224
+
+    # Build the VGG16 network and download pre-trained weights and remove the last dense layers.
+    vgg16 = applications.VGG16(weights='imagenet',
+                               include_top=False,
+                               input_shape=(img_h, img_w, 3))
+    # Freezes the network weights
+    vgg16.trainable = False
+
+    # Now you can use vgg16 as you would use any other layer.
+    # Example:
+
+    net = Sequential()
+    net.add(vgg16)
+    net.add(keras_layers.Flatten())
+    net.add(keras_layers.Dense(1))  # <- JUST AN EXAMPLE TO MAKE A WORKING NETWORK, DON'T COPY
+    net.summary()
+
+    # Save model
+    path = save_vgg16(net)
+
+    # Load model
+    print("\nReload model\n")
+    loaded_net = load_vgg16(path)
+    loaded_net.summary()
+
+    assert len(net.weights) == len(loaded_net.weights)
+    weights_are_equal = [tf.equal(w1, w2).numpy().all()
+                         for w1, w2 in zip(net.weights, loaded_net.weights)]
+    if all(weights_are_equal):
+        print("\nThe loaded model has the same weights of the original one.")
