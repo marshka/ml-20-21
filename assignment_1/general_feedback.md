@@ -107,3 +107,11 @@
 ## Logistic regression vs perceptron
 
 - Many of you pointed out that one of the differences between logistic regression and the perceptron is the different activation function they use (sigmoid vs step function), but it's also important to note that logistic regression (because of the activation function it uses) produces an output in the range [0, 1], which can be interpreted as a probability, so logistic regression is a probabilistic classifier.
+
+## Logistic regression and linear regression
+
+- Logistic regression is not the same thing as linear regression, but both are instances of a generalised linear model. (Maybe this https://stats.stackexchange.com/q/29325 be useful)
+
+## Accuracy vs MSE
+
+- The accuracy is not the same thing as the MSE. The accuracy is defined as the number of correction predictions divided by the total number of predictions, while the MSE is the average (or mean) of the squared errors, where the errors are the differences between the predictions and the correct labels. In the context of regression, the accuracy does not make much sense because most predictions will not be exact, so the accuracy can be very low, although the model may still be good. The MSE can be interpreted as a measure of "accuracy" of a regression model, but it's important to understand that "accuracy" has a specific definition in classification problems.
