@@ -10,38 +10,6 @@
 
 - Some of you tried to train, validate and test the models with different permutations of the original dataset given to you to have an average estimate of the test performance, but note that this is not exactly how k-fold cross validation works.
 
-## Retraining
-
-- Some of you tried to reevaluate the performance over the entire dataset (without first fully retraining the model on entire dataset) 
-
-    - In class, we have seen that, once you have chosen a model and tested it on the test set, you should retrain this model over the entire dataset, because, in expectation, the more data you have the better your model should become. But note that, once you get this retrained model, if you compute any performance metric using the same data you used for retraining, it will be a biased value (same idea of why we use a separate test set for testing)
-
-## Data for non-linear model
-
-- You were not required to add the features added for task 1 in task 2, i.e. you should have just passed observations with the original 2 features to the non-linear model.
-
-## Data visualization
-
-- Some of you tried to visualise the shape of the data to understand whether it's linearly separable or not, and this was a good idea.
-
-## Expected risk can be decomposed into approximation risk, estimation risk and inherent risk
-
-- Some of you did not really understand what the approximation risk is. 
-
-- Remember that the expected risk can be decomposed into 
-
-    1. the approximation risk (which is the risk associated with the choice of the model family, also known as "hypothesis class" in learning theory, and it does not depend on the training data, so it remains constant if you don't change the model family, e.g. the architecture of the neural network), 
-  
-    2. estimation risk (which is the risk associated with the choice of function that you chose FROM your model family, i.e. if you chose a function that is too bad, this risk will be high; this risk depends both on the model family and training data)
-  
-    3. inherent risk (which is related to the irreducible error)
-
-- Generally, simpler model families are more likely to lead to high approximation risk, so the correct answer to question "Which region is associated with high risk?" is section (a), where the model complexity is low; in fact, the concept of approximation risk is related to the concept of under-fitting. Maybe this answer https://ai.stackexchange.com/a/23887/2444 could be helpful.
-
-- Many of you said that the expected risk can not be brought to zero, but you didn't give the main reason: i.e. because of the inherent risk (in fact, this is a lower bound on the expected risk). 
-
-- Some of you pointed that, if you increase the model complexity, we may have over-fitting, so, the expected/structural risk, which is the generalisation ability of a model, would increase. However, note that, with an infinitely big dataset, you wouldn't need more data to learn the actual function. Moreover, with an infinitely big model family, the approximation risk would be minimal. So, in theory, it's possible to decrease the expected risk if you increase the training data and the complexity of the hypothesis class, and what remains is the inherent risk. However, it's true that, with a fixed training dataset, if you increase the complexity of the hypothesis class, you may have over-fitting.
-
 ## Hypothesis testing, null hypothesis, p-value and confidence intervals
 
 - Not all of you used a statistical test, as we saw during the lectures and in one lab, to determine which model is "statistically better". We were expecting you to do this (both in task 2 and 3) and the "statistically" part was a hint, so that you are at least familiar with the idea of a statistical test, although we have not gone into the details of statistical tests.
@@ -90,18 +58,6 @@
 
     - Some of you did not pass the correct sequence of values of the sklearn's functions to perform the statistical tests.
 
-## Code/programming (not strictly related to our course)
-
-- Generally, try to group code that does a specific functionality into a function and code that does another thing into another function, then compose functions, so that to avoid repetition. You can also use classes if you are familiar with object-oriented programming (OOP).
-
-- Many of you tried to set the seed for reproducibility, this is a good thing.
-
-- Some of you tried to build the dataset in a loop, but note that NumPy and other ML libraries already come with functions that allow you to concatenate column or row vectors directly in a more efficient way (see vectorized operations in NumPy)
-
-- One of you performed an assignment and thought that would make a copy, but that's not necessarily the case in Python, so be careful.
-
-- One of you made a mistake in creating the new data of features for task 1, so make sure that you read the documentation of the functions so that they do what you're actually expecting. It may be a good idea to double-check the results when you're unsure.
-
 
 ## Early stopping
 
@@ -138,3 +94,48 @@ The accuracy is not the same thing as the MSE. The accuracy is defined as the nu
     - Some of you thought that, in question 1, the x-axis represented the points in time during training, but it actually represents the **complexity** of the model family; so, in this case, as we change e.g. the number of hidden layers of the neural network (as stated in the assignment), we effectively change the hypothesis class. However, it's important to note that similar plots exist for the case where you observe the training, validation and test errors during training, so while we change the weights (and not) the architecture of the neural network, and that's why some of you may have confused this plot with those ones: in the slides there's also a plot where the x-axis can both be the model complexity or training iterations (in this case, the model complexity refers to how complicated the specific function/model is, e.g. whether it's very wiggly or not, and not the complexity of the hypothesis class, as in the assignment).
 
         - Another thing that may be confusing is that the word "model" is sometimes used to refer to a "hypothesis class" or "model family" and not to a specific function. The reason is: this function would be a model (or approximation) of the target function (the function we're trying to learn). In the lectures, we also talked about white-box, gray-box and black-box models and all of these may be even more confusing...
+
+
+## Expected risk can be decomposed into approximation risk, estimation risk and inherent risk
+
+- Some of you did not really understand what the approximation risk is. 
+
+- Remember that the expected risk can be decomposed into 
+
+    1. the approximation risk (which is the risk associated with the choice of the model family, also known as "hypothesis class" in learning theory, and it does not depend on the training data, so it remains constant if you don't change the model family, e.g. the architecture of the neural network), 
+  
+    2. estimation risk (which is the risk associated with the choice of function that you chose FROM your model family, i.e. if you chose a function that is too bad, this risk will be high; this risk depends both on the model family and training data)
+  
+    3. inherent risk (which is related to the irreducible error)
+
+- Generally, simpler model families are more likely to lead to high approximation risk, so the correct answer to question "Which region is associated with high risk?" is section (a), where the model complexity is low; in fact, the concept of approximation risk is related to the concept of under-fitting. Maybe this answer https://ai.stackexchange.com/a/23887/2444 could be helpful.
+
+- Many of you said that the expected risk can not be brought to zero, but you didn't give the main reason: i.e. because of the inherent risk (in fact, this is a lower bound on the expected risk). 
+
+- Some of you pointed that, if you increase the model complexity, we may have over-fitting, so, the expected/structural risk, which is the generalisation ability of a model, would increase. However, note that, with an infinitely big dataset, you wouldn't need more data to learn the actual function. Moreover, with an infinitely big model family, the approximation risk would be minimal. So, in theory, it's possible to decrease the expected risk if you increase the training data and the complexity of the hypothesis class, and what remains is the inherent risk. However, it's true that, with a fixed training dataset, if you increase the complexity of the hypothesis class, you may have over-fitting.
+
+## Data for non-linear model
+
+- You were not required to add the features added for task 1 in task 2, i.e. you should have just passed observations with the original 2 features to the non-linear model.
+
+## Retraining
+
+- Some of you tried to reevaluate the performance over the entire dataset (without first fully retraining the model on entire dataset) 
+
+    - In class, we have seen that, once you have chosen a model and tested it on the test set, you should retrain this model over the entire dataset, because, in expectation, the more data you have the better your model should become. But note that, once you get this retrained model, if you compute any performance metric using the same data you used for retraining, it will be a biased value (same idea of why we use a separate test set for testing)
+
+## Data visualization
+
+- Some of you tried to visualise the shape of the data to understand whether it's linearly separable or not, and this was a good idea.
+
+## Code/programming (not strictly related to our course)
+
+- Generally, try to group code that does a specific functionality into a function and code that does another thing into another function, then compose functions, so that to avoid repetition. You can also use classes if you are familiar with object-oriented programming (OOP).
+
+- Many of you tried to set the seed for reproducibility, this is a good thing.
+
+- Some of you tried to build the dataset in a loop, but note that NumPy and other ML libraries already come with functions that allow you to concatenate column or row vectors directly in a more efficient way (see vectorized operations in NumPy)
+
+- One of you performed an assignment and thought that would make a copy, but that's not necessarily the case in Python, so be careful.
+
+- One of you made a mistake in creating the new data of features for task 1, so make sure that you read the documentation of the functions so that they do what you're actually expecting. It may be a good idea to double-check the results when you're unsure.
