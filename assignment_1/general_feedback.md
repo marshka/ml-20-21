@@ -44,23 +44,30 @@
 
 ## Hypothesis testing, null hypothesis, p-value and confidence intervals
 
-- Not all of you used a statistical test, as we seen during the lectures and in one lab, to determine which model is "statistically better". We were expecting you to do this (both in task 2 and 3) and the "statistically" part was a hint, so that you are at least familiar with the idea of a statistical test, although we have not gone into the details of statistical tests.
+- Not all of you used a statistical test, as we saw during the lectures and in one lab, to determine which model is "statistically better". We were expecting you to do this (both in task 2 and 3) and the "statistically" part was a hint, so that you are at least familiar with the idea of a statistical test, although we have not gone into the details of statistical tests.
+
+    - To assess which model is statistically better, some of you used the R^2 metric, which I don't think we have seen during the lectures, although it's mentioned in the chapter on linear regression of one of the textbooks of the course
 
 - Be aware of the fact there are other hypothesis tests apart from the ones we have seen during the lectures; to use a specific hypothesis test, you need to make some assumptions;
     
     - one important thing when using a hypothesis test is to clearly define what the "null hypothesis" is; the alternative hypothesis would just be the complement
 
     - then you also need to define a so-called "statistical level" (often denoted by the Greek letter "alpha"), which is a threshold probability that allows you to reject the null hypothesis (and we say with "statistical significance"); typical values of alpha are 0.01 or 0.05;
+        - Almost no one did this!
 
     - You can think of the p-value as a "conditional probability" where the condition is that the null hypothesis is true, so we can write it as follows p-value = P(test statistic in some range given that null hypothesis is true), 
     
-        - (However, note that some people will claim that this definition of the p-value is wrong because, when dealing with p-values we are in the realm of "frequentist statistics", so we cannot condition on the null hypothesis, which would not be a random variable (but could be a random variable in Bayesian statistics): see here https://normaldeviate.wordpress.com/2013/03/14/double-misunderstandings-about-p-values/ or here https://theoreticalecology.wordpress.com/2013/03/15/is-the-p-value-a-conditional-probability/. But, for simplicity, you can ignore this.)
+        - (However, note that some people will claim that this definition of the p-value is wrong because, when dealing with p-values we are in the realm of "[frequentist statistics](https://stats.stackexchange.com/q/22)", so we cannot condition on the null hypothesis, which would not be a random variable (but could be a random variable in Bayesian statistics): see here https://normaldeviate.wordpress.com/2013/03/14/double-misunderstandings-about-p-values/ or here https://theoreticalecology.wordpress.com/2013/03/15/is-the-p-value-a-conditional-probability/. But, for simplicity, you can ignore this.)
 
         - (What is definitely not true is that the p-value is the probability the the null hypothesis is true: this is wrong!)
 
     - after having performed your hypothesis test, if the p-value < alpha, you reject the null hypothesis; this does not mean that the null hypothesis is false, but it only means that what you observed (e.g. a specific sequence of coin tosses, if that was the experiment, and, more precisely, the test statistic computed based on what you observed) is "unlikely" if the null hypothesis is true
 
-    - if the p-value >= alpha, you cannot immediately accept the alternative hypothesis, but you can just say that you "fail to reject" the null hypothesis; (however, there's another framework for hypothesis testing where you may accept the alternative hypothesis: see this https://www.sjsu.edu/faculty/gerstman/EpiInfo/pvalue.htm)
+    - if the p-value >= alpha, you cannot immediately accept the alternative hypothesis, but you can just say that you "fail to reject" the null hypothesis 
+    
+        - (almost no one really made this conclusion, which I think it's due to the fact that the professor did not emphasize this point/topic); 
+
+        - (however, there's another framework for hypothesis testing where you may accept the alternative hypothesis: see this https://www.sjsu.edu/faculty/gerstman/EpiInfo/pvalue.htm)
 
     - So, the significance level is also the probability of mistakenly rejecting the null hypothesis (i.e. the probability of rejecting the null hypothesis if it was true);
         - So, the significance level is the probability of making false positives, where
@@ -75,11 +82,13 @@
     - This video could also be useful: https://www.youtube.com/watch?v=k1at8VukIbw&ab_channel=jbstatistics
     - https://www.youtube.com/watch?v=3eVUPi25nzo&ab_channel=JohnLevendisJohnLevendis
 
-- The specific hypothesis test you were expected to perform is described in the slides and it should be the one for the regression problem, so not for the classification problem, which is what was done in one of the labs: so if you directly copied from the lab, your solution is not fully correct
+- The specific hypothesis test you were expected to perform is described in the slides and it should be the one for the regression problem, so not for the classification problem, which is what was done in one of the labs: so if you directly copied from the lab, your solution is not correct
 
     - Some of you did it correctly, but not all you.
 
     - You were expected to follow the instructions on slide 17-19 here: https://www.icorsi.ch/mod/resource/view.php?id=633928.
+
+    - Some of you did not pass the correct sequence of values of the sklearn's functions to perform the statistical tests.
 
 ## Code/programming (not strictly related to our course)
 
@@ -115,3 +124,17 @@
 ## Accuracy vs MSE
 
 The accuracy is not the same thing as the MSE. The accuracy is defined as the number of correct predictions divided by the total number of predictions, while the MSE is the average (or mean) of the squared errors, where the errors are the differences between the predictions and the correct labels. In the context of regression, the accuracy does not make much sense because most predictions will not be exact (i.e. the output of a regression model can be any real or floating-point number in some range), so the accuracy can be very low or even zero, although the model may still have a quite small MSE. The MSE can be interpreted as a measure of "accuracy" of a regression model, but it's important to understand that "accuracy" has a specific definition in classification problems.
+
+## Complexity of hypothesis class vs complicated function
+
+- Some of you have confused the concept of a hypothesis class (or model family) with a **specific** function (sometimes also called "model") that is chosen from this "model family", and some of you also confused the concept of a complexity (or size) of a model family with a "complicated function" (e.g. a function that is very wiggly, like the [Weierstrass functions](https://en.wikipedia.org/wiki/Weierstrass_function) or some polynomial of very high degree)
+
+    - You can think of the "model family" as a **set** of "models" or functions (in a mathematical sense), so "family" here would be a synonym for "set". 
+    
+        - So, for example, a **specific** neural network with some **specific set of weights** would represent/compute some **specific** function. If you do not change the architecture of this neural network (e.g. if you do not change the number of hidden layers, the number of neurons in each layer or the activation functions), you will not change the hypothesis class (or model family). If you change the specific values of the weights, though, you will be changing the function that the neural network represents or computes. 
+
+    - While training a neural network with e.g. gradient descent, we are typically changing only the values of these weights and not the architecture (or hypothesis class) of the neural network (although, in principle, it's also possible to change the architecture of the neural network during training); so, during training, we are looking for a function (or model) in the (fixed) set of functions/models. 
+
+    - Some of you thought that, in question 1, the x-axis represented the points in time during training, but it actually represents the **complexity** of the model family; so, in this case, as we change e.g. the number of hidden layers of the neural network (as stated in the assignment), we effectively change the hypothesis class. However, it's important to note that similar plots exist for the case where you observe the training, validation and test errors during training, so while we change the weights (and not) the architecture of the neural network, and that's why some of you may have confused this plot with those ones: in the slides there's also a plot where the x-axis can both be the model complexity or training iterations (in this case, the model complexity refers to how complicated the specific function/model is, e.g. whether it's very wiggly or not, and not the complexity of the hypothesis class, as in the assignment).
+
+        - Another thing that may be confusing is that the word "model" is sometimes used to refer to a "hypothesis class" or "model family" and not to a specific function. The reason is: this function would be a model (or approximation) of the target function (the function we're trying to learn). In the lectures, we also talked about white-box, gray-box and black-box models and all of these may be even more confusing...
