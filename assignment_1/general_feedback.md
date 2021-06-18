@@ -73,7 +73,7 @@
 
 - Many of you pointed out that one of the differences between logistic regression and the perceptron is the different activation function they use (sigmoid vs step function), but it's also important to note that logistic regression (because of the activation function it uses) produces an output in the range [0, 1], which can be interpreted as a probability, so logistic regression is a probabilistic classifier.
 
-## Logistic regression and linear regression
+## Logistic regression vs linear regression
 
 - Logistic regression is not the same thing as linear regression, but both are instances of a generalised linear model. (Maybe this https://stats.stackexchange.com/q/29325 be useful)
 
@@ -81,7 +81,7 @@
 
 The accuracy is not the same thing as the MSE. The accuracy is defined as the number of correct predictions divided by the total number of predictions, while the MSE is the average (or mean) of the squared errors, where the errors are the differences between the predictions and the correct labels. In the context of regression, the accuracy does not make much sense because most predictions will not be exact (i.e. the output of a regression model can be any real or floating-point number in some range), so the accuracy can be very low or even zero, although the model may still have a quite small MSE. The MSE can be interpreted as a measure of "accuracy" of a regression model, but it's important to understand that "accuracy" has a specific definition in classification problems.
 
-## Complexity of hypothesis class vs complicated function
+## Complex hypothesis class vs complicated function
 
 - Some of you have confused the concept of a hypothesis class (or model family) with a **specific** function (sometimes also called "model") that is chosen from this "model family", and some of you also confused the concept of a complexity (or size) of a model family with a "complicated function" (e.g. a function that is very wiggly, like the [Weierstrass functions](https://en.wikipedia.org/wiki/Weierstrass_function) or some polynomial of very high degree)
 
@@ -95,8 +95,10 @@ The accuracy is not the same thing as the MSE. The accuracy is defined as the nu
 
         - Another thing that may be confusing is that the word "model" is sometimes used to refer to a "hypothesis class" or "model family" and not to a specific function. The reason is: this function would be a model (or approximation) of the target function (the function we're trying to learn). In the lectures, we also talked about white-box, gray-box and black-box models and all of these may be even more confusing...
 
+    - The complexity of a hypothesis class can be measured with the VC dimension (which we have quickly seen in the lectures)
 
-## Expected risk can be decomposed into approximation risk, estimation risk and inherent risk
+
+## Expected risk = approximation risk + estimation risk + inherent risk
 
 - Some of you did not really understand what the approximation risk is. 
 
