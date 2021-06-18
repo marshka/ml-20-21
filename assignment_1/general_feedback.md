@@ -116,6 +116,10 @@ The accuracy is not the same thing as the MSE. The accuracy is defined as the nu
 
 - Some of you pointed that, if you increase the model complexity, we may have over-fitting, so, the expected/structural risk, which is the generalisation ability of a model, would increase. However, note that, with an infinitely big dataset, you wouldn't need more data to learn the actual function. Moreover, with an infinitely big model family, the approximation risk would be minimal. So, in theory, it's possible to decrease the expected risk if you increase the training data and the complexity of the hypothesis class, and what remains is the inherent risk. However, it's true that, with a fixed training dataset, if you increase the complexity of the hypothesis class, you may have over-fitting.
 
+## ReLU
+
+- The ReLU is not a linear activation function, although it looks like linear: it's piecewise linear. See this article https://machinelearningmastery.com/rectified-linear-activation-function-for-deep-learning-neural-networks/.
+
 ## Data for non-linear model
 
 - You were not required to add the features added for task 1 in task 2, i.e. you should have just passed observations with the original 2 features to the non-linear model.
