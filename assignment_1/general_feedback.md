@@ -116,6 +116,10 @@ The accuracy is not the same thing as the MSE. The accuracy is defined as the nu
 
 - Some of you pointed that, if you increase the model complexity, we may have over-fitting, so, the expected/structural risk, which is the generalisation ability of a model, would increase. However, note that, with an infinitely big dataset, you wouldn't need more data to learn the actual function. Moreover, with an infinitely big model family, the approximation risk would be minimal. So, in theory, it's possible to decrease the expected risk if you increase the training data and the complexity of the hypothesis class, and what remains is the inherent risk. However, it's true that, with a fixed training dataset, if you increase the complexity of the hypothesis class, you may have over-fitting.
 
+## Noise and unrepresentative training data
+
+- Many of you explained that over-fitting is when the model learns the "noise in the training data". Although this can be true, over-fitting, i.e. when the model performs well on the training data but poorly on the validation and test data, can also occur because the training (and validation/test) data is not representative of the whole population. For example, if you do not shuffle the whole dataset before splitting, you could end up with different training and validation distributions, so you could end up with a poor performance because of this.
+
 ## ReLU
 
 - The ReLU is not a linear activation function, although it looks like linear: it's piecewise linear. See this article https://machinelearningmastery.com/rectified-linear-activation-function-for-deep-learning-neural-networks/.
