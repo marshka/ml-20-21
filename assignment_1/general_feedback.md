@@ -95,7 +95,7 @@ The accuracy is not the same thing as the MSE. The accuracy is defined as the nu
 
         - Another thing that may be confusing is that the word "model" is sometimes used to refer to a "hypothesis class" or "model family" and not to a specific function. The reason is: this function would be a model (or approximation) of the target function (the function we're trying to learn). In the lectures, we also talked about white-box, gray-box and black-box models and all of these may be even more confusing...
 
-    - The complexity of a hypothesis class can be measured with the VC dimension (which we have quickly seen in the lectures)
+    - In learning theory, the complexity of a hypothesis class can be measured with the VC dimension (which we have quickly seen in the lectures), but sometimes it can just be approximately measured by the number of parameters/weights (or degrees of freedom) that the model has. In fact, in learning theory, the VC dimension e.g. of neural networks is often expressed as a function of the number of parameters.
 
 
 ## Expected risk = approximation risk + estimation risk + inherent risk
