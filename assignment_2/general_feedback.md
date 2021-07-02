@@ -2,7 +2,7 @@
 
 ## ML concepts
 
-- **Early stopping with the correct metric**: Some of you, as in the first assignment, did not use the `EarlyStopping` class correctly. Specifically, some of you monitored the training accuracy (or even loss) by passing the `"accuracy"` (or `"loss"`, respectively) to the "monitor" value of the class `EarlyStopping`, but you should have passed `"val_accuracy"`. This is an big mistake, so make sure not to make it again in the future. 
+- **Early stopping with the correct metric**: Some of you, as in the first assignment, did not use the `EarlyStopping` class correctly. Specifically, some of you monitored the training accuracy (or even loss) by passing the `"accuracy"` (or `"loss"`, respectively) to the `monitor` parameter of the class `EarlyStopping`, but you should have passed `"val_accuracy"`. This is an big mistake, so make sure not to make it again in the future. 
 
     - It's also important to note that, in general, the metrics that you may want to monitor (like the accuracy) may not correspond to the loss. In the case of a multi-class classification problem (like exercise 1 of this assignment 2), the loss was the cross-entropy and the metric was the accuracy, which are different! 
 
