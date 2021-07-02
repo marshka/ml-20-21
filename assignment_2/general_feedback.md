@@ -10,7 +10,7 @@
 
 - **Validation vs testing**: You should not have used the test data for validation. You should have either manually split the training data into training and validation data or specify the `0.2` as the value for the parameter `validation_split` of the `fit` method (and, in both cases, you should not have touched the test data, which is used for model evaluation, i.e. assess the generalisation ability of the model). This is a big mistake because cross-validation is extremely important in machine learning and you really need to understand it.
 
-- **Transfer learning**: Some of you did not really performed transfer learning in task 2. It was really required to that you used VGG16 as the backbone of the neural network. I don't know whether you didn't do this because of lack of time, computational resources (to train the bigger model) or you misunderstood the specifications of the assignment.
+- **Transfer learning**: Some of you did not really performed transfer learning in task 2. It was really required to use VGG16 as the backbone of the neural network. I don't know whether you didn't do this because of lack of time, computational resources (to train the bigger model) or you misunderstood the specifications of the assignment.
 
 - **Analyse the plots**: Nobody commented on why, in the second task, in most cases, with data augmentation, the validation accuracy was higher than the training accuracy. Isn't that strange? Did you also augment the validation data? Would this change if we trained the model for more epochs?
 
