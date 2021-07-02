@@ -2,7 +2,7 @@
 
 ## ML concepts
 
-- **Early stopping with the correct metric**: Some of you, as in the first assignment, did not use the EarlyStopping class correctly. Specifically, some of you monitored the training accuracy (or even loss) by passing the "accuracy" (or "loss", respectively) to the "monitor" value of the class EarlyStopping, but you should have passed "val_accuracy". This is an big mistake, so make sure not to make it again in the future. 
+- **Early stopping with the correct metric**: Some of you, as in the first assignment, did not use the `EarlyStopping` class correctly. Specifically, some of you monitored the training accuracy (or even loss) by passing the `"accuracy"` (or `"loss"`, respectively) to the "monitor" value of the class `EarlyStopping`, but you should have passed `"val_accuracy"`. This is an big mistake, so make sure not to make it again in the future. 
 
     - It's also important to note that, in general, the metrics that you may want to monitor (like the accuracy) may not correspond to the loss. In the case of a multi-class classification problem (like exercise 1 of this assignment 2), the loss was the cross-entropy and the metric was the accuracy, which are different! 
 
@@ -16,7 +16,7 @@
 
 ## Programming mistakes and style
 
-- **Tuples and function calls**: In Python, (2, 2) would represent a tuple of two numbers. If the first parameter of a function f requires a tuple and you call that function as follows f(1, 2), then you will not be passing a tuple to the first parameter, but just the number 1. You need to do this f((1, 1), 2)
+- **Tuples and function calls**: In Python, `(2, 2)` would represent a tuple of two numbers. If the first parameter of a function `f` requires a tuple and you call that function as follows `f(1, 2)`, then you will **not** be passing a tuple to the first parameter, but just the number `1`. You need to do this `f((1, 1), 2)`.
 
 - **4 spaces**: In Python, although this is just a (more or less standard) convention, you should use 4 spaces for the indentation. In any case, the most important thing is to be consistent, i.e. if you use 2 spaces for the indentation of a function, you should use 2 spaces for the indentation of all other functions, because, otherwise, this can lead to some problems/bugs. See https://www.python.org/dev/peps/pep-0008/#indentation for more details.
 
